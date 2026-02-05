@@ -1,11 +1,26 @@
 # frozen_string_literal: true
 
+require 'open3'
 require 'English'
 require 'pathname'
 
-def run_command(cmd)
-  puts "@@[command] #{cmd}"
-  `#{cmd}`
+def run_command(command)
+    puts "@@[command] #{command}"
+    status = nil
+    stdout_str = nil
+    stderr_str = nil
+    Open3.popen3(command) do |stdin, stdout, stderr, wait_thr|
+        stdout.each_line do |line|
+            puts line
+        end
+        stdout_str = stdout.read
+        stderr_str = stderr.read
+        status = wait_thr.value
+    end
+  
+    unless status.success?
+        abort(stderr_str)
+    end
 end
 
 def bundler_version
