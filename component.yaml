@@ -20,6 +20,7 @@ inputs:
   description: "Extra command line parameters. Enter --verbose for verbose mode."
   helpText:
 - key: "DANGER_GITHUB_API_TOKEN"
+  defaultValue: "$DANGER_GITHUB_API_TOKEN"
   isRequired: false
   title: Github Access Token
   description: "Github Access Token for the bot user."
